@@ -1,0 +1,1 @@
+The Fix: Row-Level Locking (SKIP LOCKED) We need to tell the database: "Hey, while I am looking at Seat 7, LOCK IT so nobody else can touch it. If it's locked, skip it and give the next guy Seat 8."
