@@ -19,6 +19,7 @@ class UserResponse(BaseModel):
     id: int
     username : str
     email : EmailStr
+    role : str
     
     class Config:                  # Hey, if input is a SQLAlchemy object not dict, read values using attributes.
         from_attributes = True
@@ -142,3 +143,21 @@ class OrderResponse(BaseModel):
     id: str
     amount : int
     currency : str
+    
+
+#------------------------Admin------------------------
+class DailyRouteCreate(BaseModel):
+    train_number: str
+    date : date
+    route_id : int
+    start_time : time
+    
+class DailyRouteResponse(BaseModel):
+    id: int
+    train_id: int
+    date: date
+    route_id: int
+    start_time: time
+    
+    class Config:
+        from_attributes = True

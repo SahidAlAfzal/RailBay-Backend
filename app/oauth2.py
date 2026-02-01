@@ -55,3 +55,23 @@ def get_current_user(token:str = Depends(oauth2_scheme), db : Session = Depends(
         raise HTTPException(status.HTTP_404_NOT_FOUND,detail="User not found") #change it to credentials_exception later
     
     return user
+
+
+def get_current_admin(token:str = Depends(oauth2_scheme), db : Session = Depends(get_db)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    
+    token_data = verify_access_token(token,credentials_exception)
+    
+    admin_user = db.query(models.User).filter(
+        models.User.id == token_data.id,
+        models.User.role == "Admin"
+    ).first()
+    
+    if not admin_user:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail="you are not allowed to perform this act")       #change it to credentials_exception later
+    
+    return admin_user
