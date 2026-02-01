@@ -19,4 +19,4 @@ app.include_router(payment.router)
 
 @app.get("/")
 def root():
-    return {"message" : "Welcome to RailBay"}
+    return {"message" : "Welcome to RailBay!"}
