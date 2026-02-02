@@ -15,11 +15,16 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))             #adde
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+# Check Cloud variable first, then Local variable
+database_url = os.getenv("DATABASE_URL") or os.getenv("SQLALCHEMY_DATABASE_URL")
 
-database_url = os.getenv("SQLALCHEMY_DATABASE_URL")          #make sure changes in db are done on cloud as well
 if database_url:
+    # Fix the protocol for SQLAlchemy if needed
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+        
     config.set_main_option("sqlalchemy.url", database_url)
-
+    
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:
