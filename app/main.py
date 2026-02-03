@@ -5,7 +5,7 @@ from .routers import auth, users, trains, bookings, payment, admin
 from sqlalchemy.orm import Session
 from app.database import SessionLocal, engine
 import os
-#models.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI(title="RailBay")
